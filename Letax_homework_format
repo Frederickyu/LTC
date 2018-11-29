@@ -1,0 +1,354 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework 3}
+\newcommand{\hmwkDueDate}{00/00/2018}
+\newcommand{\hmwkClass}{BIOS}
+%\newcommand{\hmwkClassTime}{Section A}
+\newcommand{\hmwkClassInstructor}{Professor A}
+\newcommand{\hmwkAuthorName}{\textbf{Frederick}
+\and \textbf{ID: 000000}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ }\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+
+\begin{document}
+	\maketitle
+	
+	\pagebreak
+	
+	\begin{homeworkProblem}
+		 man claims to have extrasensory perception. As a test, a fair coin is flipped 10 times, and he is asked to predict the outcome in advance.  Our man gets 7 out of 10 correct.
+		 
+		 \begin{enumerate}
+		 	\item What is the probability that he would have done at least this well if he had no ESP?
+		 	\item To really put the pressure on, we tell him we’ll pay him \$100 if he gets seven right, \$200 if he gets eight right, \$300 if he gets nine right and \$400 if he gets them all right.  However, if he gets less than seven right, he has to pay us \$2500.  How much money would he expect to make/lose? (assuming he has no extrasensory perception)
+		 \end{enumerate}
+		 
+		 \textbf{Solution}
+		 
+		 1. We define X : the number of times the man guess the problem true. Such that $X \sim Bin(10, \frac{1}{2})$,
+		 
+		 $p(the\ man\ don't\ have\ ESP\ and\ at\ least\ this\ well) = p(x \geq 7) = \sum_{1 = 7}^{10} p(x=i)$
+		 
+		 $p(x = 7) = = {10 \choose 7}(\frac{1}{2})^{7} (\frac{1}{2})^{3} \approx 0.12$, 
+		 
+		 
+		 $p(x = 8) = {10 \choose 8}(\frac{1}{2})^{8} (\frac{1}{2})^{2} \approx 0.044$, 
+		 
+		 
+		 $p(x = 9) = {10 \choose 9}(\frac{1}{2})^{9} (\frac{1}{2})^{1} \approx 0.0098$, 
+		 
+		 
+		 $p(x = 10) = {10 \choose 10}(\frac{1}{2})^{10} (\frac{1}{2})^{0} \approx 0.00098$
+		 
+		 $p(x \geq 7) = p(x=7) +p(x=8) +p(x=9) +p(x=10) \approx 0.17$
+		 \\
+		 
+		 2. 
+		 $p(x < 7) = 1 - p(x \geq 7) = 1-p(x=7)-p(x=8)-p(x=9)-p(x=10) = 0.83$
+		 
+		 $E(the\ man\ make) = \sum_{all\ possible\ outcome} (particular\ money\ he\ make) \times p(particular\ money\ he\ make)$
+		 
+		 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \   = -2050.868
+		 
+		 Therefore, the man expects to lose \$ 2050.868
+		 
+	\end{homeworkProblem}
+	
+	\begin{homeworkProblem}
+		Suppose N people are to be blood tested to determine whether or not they have a certain disease.  If everyone is tested, then N tests are required.  An alternative strategy, to save time and resources, is to pool the blood samples into groups of size k$>$1.  Each pooled sample is then tested.  If a particular pooled sample tests negative, then all k people in that group are free from the disease. If it is positive, then each person in that group must be retested, ultimately resulting in k+1 tests being done on that particular group (the initial pooled test plus k tests for each individual).  Suppose the probability that any one person has a positive test is p. Let X be the random variable counting the number of tests done on a pooled sample, so that X takes on only two values, either 1 or k+1.
+		
+			\begin{enumerate}
+		        \item Write down the probability mass function for X.
+		        \item For large N, there are approximately $\frac{N}{k}$ groups of size k, so the total expected number of tests is approximately $T(k)=\frac{N}{k} \times  E[X]$.  Calculate $E[X]$ and thus obtain an expression for T as a function of k.
+	\end{enumerate}
+	
+	\textbf{Solution}
+	
+	1. $P(x=1) = (1-p)^{k}, P(x=k+1) = 1 - (1-p)^{k}$,Such that
+	
+	\begin{displaymath}
+		f_{X}(x) = \left\{ \begin{array}{11}
+			(1-p)^{k} & \textrm{if x = 1}\\
+			1 - (1-p)^{k} & \textrm{if x = k+1}\\
+			0 & \textrm{otherwise}
+		\end{array}
+	\end{displaymath}
+	
+	
+	2. $E(X) = 1\times (1-p)^{k} + (k+1)\times (1 - (1-p)^{k}) = k - k(1 - p)^{k} +1$,
+	
+	\ \ \ \  $T(k) = \frac{N}{k}\times (k - k(1 - p)^{k} +1) = \frac{N(k - k(1 - p)^{k} +1)}{k}$.
+	\end{homeworkProblem}
+	
+	\pagebreak
+		
+    \begin{homeworkProblem}
+    	Derive the moment generating function of $Y \sim Negative Binomial (r, p)$ and use it to get the mean and variance.
+    	
+    	\textbf{Solution}
+    	
+    We know that the moment generating function (m.g.f) of y is 
+    
+    \centerline{$m_{y}(t) = E(e^{ty}) = \sum_{y=0}^{\infty} e^{ty}p(y)$}
+    
+    And $Y \sim Negative Binomial (r, p)$.
+    
+    Firstly, we can break Y into segments. $\underbrace{ Y = X_{1} + X_{2} +\cdots+X_{r}}_{r}$, where $X_{i} \sim Geom(p), and X_{i} \perp X_{j},\  if i \neq j$.
+    
+    
+    And we know that the m.g.f. of the sum of r i.i.d. random variables is the m.g.f. of one segment random variable raised to the $r^{th}$ power; i.e.
+    
+    \centerline{$m_{y}(t) = (m_{x}(t))^{r}$}.
+    
+    So that, secondly, we calculate the m.g.f. of geometric distributions with parameter $p$.
+    
+    \[
+    \begin{split}
+    	m_{x}(t)&=E(e^{tx})
+    	\\
+    	&=\sum_{x=0}^{\infty} e^{tx}p(x)
+    	\\
+    	&=\sum_{x=0}^{\infty} e^{tx} p(1-p)^{x}
+    	\\
+    	&=p\sum_{x=0}^{\infty} (e^{t}(1-p))^{x}
+    	\\
+    	&=\frac{p}{1-(1-p)e^{t}}
+    \end{split}
+    \]
+    
+    Therefore, the m.g.f. of Y,
+    
+    \centerline{$m_{y}(t) = (\frac{p}{1-(1-p)e^{t}})^{r}$}
+    
+    We know that $e^{ty} = 1 + ty + \frac{(ty)^{2}}{2!} + \cdots + \frac{(ty)^{n}}{n!} + \cdots = \sum_{i=0}^{\infty} \frac{(ty)^{i}}{i!}$.
+    
+    Such that,
+    \[
+    \begin{split}
+    E(e^{ty}) &= \sum_{y=0}^{\infty} (1 + ty + \frac{(ty)^{2}}{2!} + \cdots + \frac{(ty)^{n}}{n!} + \cdots)p(y)
+    \\
+    &= \sum_{y=0}^{\infty}p(y) +t\sum_{y=0}^{\infty}yp(y) + \cdots + \frac{t^{n}}{n!}\sum_{y=0}^{\infty}y^{n}p(y) + \cdots
+    \end{split}
+    
+    Therefore, 
+    
+    \centerline{$E(y) = \frac{d}{dt} (m_{y}(t)) = \frac{r}{p}$}
+    
+    \centerline{$Var(y) = \frac{d^{2}}{dt^{2}} (m_{y}(t)) = \frac{r(1-p)}{p^{2}}$}
+    \end{homeworkProblem}
+    
+    \pagebreak
+    
+    \begin{homeworkProblem}
+    	\textbf{3.7} Let the number of chocolate chips in a certain type of cookie have a Poisson distribution. We want the probability that a randomly chosen cookie has at least two chocolate chips to be greater than .99. Find the smallest value of the mean of the distribution that ensures this probability.
+    	
+    	\textbf{Solution}
+    	
+    	Define X : the number of chocolate chips in that cookie. We know that $X \sim Poisson(\lambda)$
+    	
+    	We want $p(x \geq 2) = 1- p(x=0) - p(x=1) = 1-e^{- \lambda} - \lambda e^{- \lambda} > 0.99$
+    	
+    	That is $e^{- \lambda} + \lambda e^{- \lambda} < 0.01$
+    	
+    	Let $y = e^{- \lambda} + \lambda e^{- \lambda}$, $\lambda > 0, and\ e^{x} > 0$, such that $y > 0$ for all $\lambda > 0}$
+    	
+    	To find the smallest $y$, we calculate the derivative of $y$
+    	
+    	$y'(\lambda) = -e^{-\lambda} + e^{- \lambda} - \lambda e^{- \lambda} = - \lambda e^{- \lambda}$
+    	
+    	when $\lambda > 0$, $y'$ always $<0$, such that $y$ is a monotonically decreasing function of $\lambda$.
+    	
+    	when $\lambda = 0, y = 1$
+    	
+    	then we calculate when $y = 0.01$, that is to find a $\lambda$ that $e^{- \lambda} + \lambda e^{- \lambda} = 0.01$ 
+    	
+    	I calculate this function by computer, then the answer is $\lambda = 6.64$, from the monotonic  of $y$ we know that if $\lambda > 6.64, y < 0.01$. Therefore, the minimum $\lambda$ is 6.64. 	
+    	 
+    \end{homeworkProblem}
+    
+    \pagebreak
+    
+    \begin{homeworkProblem}
+    	\textbf{3.13} A truncated discrete distribution is one in which a particular class cannot be observed and is eliminated from the sample space. In particular, If X has a range 0, 1, 2,... and the 0 class cannot be observed (as is usually the case), the 0-truncated random variable $X_{T}$ has pmf
+    	
+    	$P(X_{T} = x) = \frac{P(X = x)}{P(X > 0)},\ x = 1,2,...$
+    	
+    	Find the pmf, mean, and variance of the 0-truncated random variable starting from
+    	
+    	\begin{enumerate}
+    		\item $X \sim Poisson( \lambda)$
+    		\item $Y \sim negative binomial(r, p)$ as in class and get $P(Y_{t} = y) = \frac{P(Y = y)}{P(Y > r)}$
+    	\end{enumerate}
+    	
+    	\textbf{Solution}
+    	
+    	1. $X \sim Poisson( \lambda)$, then the probability mass function for X is $p(X=x) = \frac{\lambda ^{x}}{x!} e^{-\lambda}$
+    	
+    	the p.m.f. for $X_{T}$ is $P(X_{T} = x) = \frac{P(X = x)}{P(X > 0)}$
+    	
+    	Such that $E(X_{T}) = \sum_{x=1}^{\infty} x \frac{P(X = x)}{P(X > 0)} = \frac{1}{P(X > 0)}\sum_{x=0}^{\infty} x P(X = x) = \frac{E(X)}{P(X>0)}$
+    	
+    	Similarity, $E(X_{T}^{2}) = \frac{E(X^{2})}{P(X>0)}$,
+    	
+    	Such that $Var(X_{T}) = E(X_{T}^{2}) - [E(X_{T})]^{2} = \frac{E(X^{2})}{P(X>0)} - (\frac{E(X)}{P(X>0)})^{2}$
+    	
+    	Therefore, when $X \sim Poisson( \lambda)$,
+    	
+    	$P(X_{T} = x) = \frac{P(X = x)}{P(X > 0)} = \frac{\frac{\lambda ^{x}}{x!} e^{-\lambda}}{1-p(X=0)} = \frac{e^{-\lambda} \lambda ^{x}}{x!(1-e^{-\lambda})}$
+    	
+    	$E(X_{T}) = \frac{E(X)}{P(X>0)} = \frac{\lambda}{1-e^{-\lambda}}$
+    	
+    	$Var(X_{T}) = \frac{E(X^{2})}{P(X>0)} - (\frac{E(X)}{P(X>0)})^{2} = \frac{(\lambda ^2 + \lambda)(1 - e^{- \lambda}) - \lambda ^2}{(1 - e^{- \lambda})^{2}}$
+    	\\
+    	
+    	2. Similarly, $Y \sim negative binomial(r,p)$,the p.m.f. for $Y$ is $p(Y = y) = {y-1 \choose r-1} p^{r}(1-p)^{y-r}$
+    	
+    	$E(Y) = \frac{r}{p}$, $var(Y) = \frac{r(1-p)}{p^{2}}$, $E(Y^{2}) = var(Y) + [E(Y)]^{2} = \frac{r^{2} + r - rp}{p^{2}}$
+    	
+    	p.m.f. for $Y_{t}$ is $P(Y_{t} = y) = \frac{P(Y = y)}{P(Y > r)}$
+    	
+    	Such that, $E(Y_{t}) = \sum_{y=r + 1}^{\infty} y \frac{P(Y = y)}{P(Y > r)} = \frac{1}{P(Y > r)}(\sum_{y=r}^{\infty} y P(Y = y) - r p^{r})= \frac{E(Y) - r p^{r}}{P(Y>r)}$
+    	
+    	Similarity, $E(Y_{t}^{2}) = \frac{E(Y^{2}) - r^{2} p^{r}}{P(Y>r)}$, 
+    	
+    	Such that, $Var(Y_{t}) = E(Y_{t}^{2}) - [E(Y_{t})]^{2} = \frac{E(Y^{2}) - r^{2} p^{r}}{P(Y>r)} - (\frac{E(Y)}{P(Y>r)} - r p^{r})^{2}$
+    	
+    	Therefore, 
+    	$P(Y_{t} = y) = \frac{P(Y = y)}{P(Y > r)} = \frac{{y-1 \choose r-1} p^{r}(1-p)^{y-r}}{1-p(Y = r)} = \frac{{y-1 \choose r-1} p^{r}(1-p)^{y-r}}{1-p^{r}}$
+    	
+    	$E(Y_{t}) = \frac{E(Y) - r p^{r}}{P(Y>r)} = \frac{r - r p^{3}}{p-p^{r+1}}$
+    	
+    	$Var(Y_{t}) = \frac{E(Y^{2}) - r^{2} p^{r}}{P(Y>r)} - (\frac{E(Y) - r p^{r}}{P(Y>r)})^{2} = \frac{r-pr-r^{2}p^{r+2}-p^{r}r^{2}-rp^{r}+rp^{r+1}+2r^{2}p^{r+1}}{p^{2} (1 - p^{r})^{2}}$
+
+    	
+    \end{homeworkProblem}
+    
+\end{document}
